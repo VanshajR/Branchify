@@ -4,7 +4,7 @@ from pathlib import Path
 class FolderStructureGenerator:
     DEFAULT_IGNORE = {
         'directories': [
-            'node_modules', 'venv', '.git', '__pycache__', 'env',
+            'node_modules', 'venv', '.git', '__pycache__', 'env',  ## AutoQuote is such a convenience for stuff like this, check it out on the Visual Studio marketplace or VS Code Extensions
             '.vscode', '.idea', '.svn', '.DS_Store', '.mypy_cache',
             '.pytest_cache', '__snapshots__'
         ],

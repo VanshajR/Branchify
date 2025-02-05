@@ -1,4 +1,6 @@
 import argparse
+import subprocess
+import sys
 from pathlib import Path
 from .generator import FolderStructureGenerator
 
@@ -9,8 +11,18 @@ def main():
     parser.add_argument('-o', '--output', type=str, help='Output file path')
     parser.add_argument('--include-dir', nargs='+', help='Directories to explicitly include')
     parser.add_argument('--include-pattern', nargs='+', help='File patterns to explicitly include')
+    parser.add_argument('--update', action='store_true', help='Update branchify package')
 
     args = parser.parse_args()
+
+    if args.update:
+        try:
+            print("Updating branchify package...")
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'branchify', '--upgrade'])
+            print("Branchify package updated successfully.")
+        except subprocess.CalledProcessError as e:
+            print(f"Error updating branchify package: {e}")
+        sys.exit(0)
 
     try:
         ignores = {'directories': args.ignore} if args.ignore else None

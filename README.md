@@ -1,7 +1,8 @@
 
-# Branchify 🌳📂  
+# Branchify 📂  
 
 **Branchify** generates an ASCII folder structure from any directory. Works for Python>=3.4
+**Documentation** : Check out the documentation here: https://pypi.org/project/branchify/ 
 
 ## Features  
 ✅ Command-line Interface (CLI) & Python API  
@@ -50,6 +51,11 @@ branchify --file-limit 5
 branchify --output structure.txt
 ```
 
+### 7️⃣ Update Branchify to the latest version
+```sh
+branchify --update
+```
+
 ---
 
 ## Python API Usage
@@ -66,6 +72,10 @@ ignores = {"directories": ["build"], "patterns": ["*.log"]}
 generator = FolderStructureGenerator(root_dir="my_project", ignores=ignores, file_limit=3)
 print(generator.generate())
 ```
+---
+
+## Sample Usage
+
 
 ---
 
@@ -95,4 +105,4 @@ This project is licensed under the **BSD 3-Clause License**
 ---
 
 ## Contributing
-If you'd like to contribute to TreeViz, please open an issue or a pull request at the [repository](https://github.com/VanshajR/TreeViz)
+If you'd like to contribute to Branchify, please open an issue or a pull request at the [repository](https://github.com/VanshajR/Branchify)
