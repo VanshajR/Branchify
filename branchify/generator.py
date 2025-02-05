@@ -57,7 +57,7 @@ class FolderStructureGenerator:
             return files
         return files[:self.file_limit] + ['...']
 
-    def _walk_dir(self, current_dir, prefix=''):
+    def _walk_dir(self, current_dir, prefix='', is_last=False):
         """Recursively walks through directories and builds the folder structure."""
         try:
             entries = sorted(os.scandir(current_dir), key=lambda e: e.name)
@@ -73,17 +73,22 @@ class FolderStructureGenerator:
         files = [e.name for e in entries if e.is_file()]
         formatted_files = self._format_files(files)
 
+        total_entries = len(dirs) + len(formatted_files)
+
+        for i, directory in enumerate(dirs):
+            path = Path(directory.path)
+            is_last_dir = (i == len(dirs) - 1) and not formatted_files  # Last directory and no files after
+
+            connector = '└── ' if is_last_dir else '├── '
+            next_prefix = prefix + ('    ' if is_last else '│   ')
+
+            self.output.append(f"{prefix}{connector}{path.name}/")
+            self._walk_dir(path, next_prefix, is_last_dir)
+
         for i, file in enumerate(formatted_files):
             connector = '└── ' if i == len(formatted_files) - 1 else '├── '
             self.output.append(f"{prefix}{connector}{file}")
 
-        for i, directory in enumerate(dirs):
-            path = Path(directory.path)
-            connector = '└── ' if i == len(dirs) - 1 and not formatted_files else '├── '
-            next_prefix = prefix + ('    ' if connector == '└── ' else '│   ')
-
-            self.output.append(f"{prefix}{connector}{path.name}/")
-            self._walk_dir(path, next_prefix)
 
     def generate(self):
         """Generates and returns the folder structure."""
