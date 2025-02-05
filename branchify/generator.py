@@ -57,7 +57,7 @@ class FolderStructureGenerator:
             return files
         return files[:self.file_limit] + ['...']
 
-    def _walk_dir(self, current_dir, prefix='', is_last=False):
+    def _walk_dir(self, current_dir, prefix=''):
         """Recursively walks through directories and builds the folder structure."""
         try:
             entries = sorted(os.scandir(current_dir), key=lambda e: e.name)
@@ -69,26 +69,29 @@ class FolderStructureGenerator:
             self.output.append(f"{prefix}└── [ERROR: {e}]")
             return
 
+        # Separate directories and files
         dirs = [e for e in entries if e.is_dir()]
         files = [e.name for e in entries if e.is_file()]
         formatted_files = self._format_files(files)
 
-        total_entries = len(dirs) + len(formatted_files)
+        total_items = len(dirs) + len(formatted_files)
 
+        # Process directories first
         for i, directory in enumerate(dirs):
-            path = Path(directory.path)
-            is_last_dir = (i == len(dirs) - 1) and not formatted_files  # Last directory and no files after
+            overall_index = i  # directories come first
+            is_last_item = (overall_index == total_items - 1)
+            connector = '└── ' if is_last_item else '├── '
+            self.output.append(f"{prefix}{connector}{directory.name}/")
+            # Update prefix for children: if this item is last, use spaces; otherwise keep the vertical line
+            new_prefix = prefix + ('    ' if is_last_item else '│   ')
+            self._walk_dir(Path(directory.path), new_prefix)
 
-            connector = '└── ' if is_last_dir else '├── '
-            next_prefix = prefix + ('    ' if is_last else '│   ')
-
-            self.output.append(f"{prefix}{connector}{path.name}/")
-            self._walk_dir(path, next_prefix, is_last_dir)
-
-        for i, file in enumerate(formatted_files):
-            connector = '└── ' if i == len(formatted_files) - 1 else '├── '
+        # Then process files.
+        for j, file in enumerate(formatted_files):
+            overall_index = len(dirs) + j  # files follow directories
+            is_last_item = (overall_index == total_items - 1)
+            connector = '└── ' if is_last_item else '├── '
             self.output.append(f"{prefix}{connector}{file}")
-
 
     def generate(self):
         """Generates and returns the folder structure."""
