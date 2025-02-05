@@ -1,7 +1,7 @@
 
 # Branchify 🌳📂  
 
-**TreeViz** , which stands for Tree Visualizer, generates an ASCII folder structure from any directory. Works for Python>=3.4
+**Branchify** generates an ASCII folder structure from any directory. Works for Python>=3.4
 
 ## Features  
 ✅ Command-line Interface (CLI) & Python API  
