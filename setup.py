@@ -1,10 +1,12 @@
 from setuptools import setup, find_packages
-
+from pathlib import Path
+here = Path(__file__).parent
+long_description = (here / "DOCUMENTATION.md").read_text(encoding="utf-8")
 setup(
     name="branchify",
     version="1.0.1",
     description="Generate an ASCII folder structure of a directory",
-    long_description=open("DOCUMENTATION.md", encoding="utf-8").read(),
+    long_description=long_description,
     long_description_content_type="text/markdown",
     author="Vanshaj Raghuvanshi",
     author_email="vanshajraghuvanshi@gmail.com",
@@ -20,5 +22,5 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.4",
+    python_requires=">=3.8",
 )
