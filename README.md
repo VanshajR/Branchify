@@ -36,20 +36,37 @@ branchify --path my_project
 ```sh
 branchify --ignore node_modules venv --ignore-patterns '*.wav'
 ```
+OR
+```sh
+branchify --i node_modules venv -ip '*.wav'
+```
+
 
 ### 4️⃣ Explicitly Include Some Directories or Files
 ```sh
 branchify --include-dir logs --include-pattern '*.json'
+```
+OR
+```sh
+branchify -ind logs -inp '*.json'
 ```
 
 ### 5️⃣ Set a Custom File Limit
 ```sh
 branchify --depth 5
 ```
+OR
+```sh
+branchify -d 5
+```
 
 ### 6️⃣ Save Output to a File
 ```sh
 branchify --output structure.txt
+```
+OR
+```sh
+branchify -o structure.txt
 ```
 
 ### 7️⃣ Update Branchify to the latest version
