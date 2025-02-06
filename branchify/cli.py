@@ -7,10 +7,12 @@ from .generator import FolderStructureGenerator
 def main():
     parser = argparse.ArgumentParser(description='Generate ASCII folder structure')
     parser.add_argument('-p', '--path', type=str, help='Root directory path (default: current directory)')
-    parser.add_argument('-i', '--ignore', nargs='+', help='Directories to ignore')
+    parser.add_argument('-id', '--ignore', nargs='+', help='Directories to ignore')
     parser.add_argument('-o', '--output', type=str, help='Output file path')
-    parser.add_argument('--include-dir', nargs='+', help='Directories to explicitly include')
-    parser.add_argument('--include-pattern', nargs='+', help='File patterns to explicitly include')
+    parser.add_argument('-ind', '--include-dir', nargs='+', help='Directories to explicitly include')
+    parser.add_argument('-inp', '--include-pattern', nargs='+', help='File patterns/formats to explicitly include')
+    parser.add_argument('-ip', '--ignore-patterns', nargs='+', help='File patterns/formats to ignore')
+    parser.add_argument('-d', '--depth', type=int, help='Depth of folder structure to display (file limit)')
     parser.add_argument('--update', action='store_true', help='Update branchify package')
 
     args = parser.parse_args()
@@ -25,13 +27,21 @@ def main():
         sys.exit(0)
 
     try:
-        ignores = {'directories': args.ignore} if args.ignore else None
+        ignores = {
+            'directories': args.ignore or [],
+            'ignore_patterns': args.ignore_patterns or [] 
+        }
         includes = {
             'directories': args.include_dir or [],
             'patterns': args.include_pattern or []
         }
 
-        generator = FolderStructureGenerator(root_dir=args.path, ignores=ignores, includes=includes)
+        generator = FolderStructureGenerator(
+            root_dir=args.path,
+            ignores=ignores,
+            includes=includes,
+            depth=args.depth
+        )
         structure = generator.generate()
 
         if args.output:

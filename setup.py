@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name="branchify",
-    version="1.0.0",
+    version="1.0.1",
     description="Generate an ASCII folder structure of a directory",
-    long_description=open("README.md", encoding="utf-8").read(),
+    long_description=open("DOCUMENTATION.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="Vanshaj Raghuvanshi",
     author_email="vanshajraghuvanshi@gmail.com",

@@ -1,8 +1,7 @@
 
-# Branchify 📂  
+# Branchify Documentation 📂  
 
 **Branchify** generates an ASCII folder structure from any directory. Works for Python>=3.4
-**Documentation** : Check out the documentation here: https://pypi.org/project/branchify/ 
 
 ## Features  
 ✅ Command-line Interface (CLI) & Python API  
@@ -147,11 +146,9 @@ This limit is applied as follows:
 
 ![Branchify Demo](https://res.cloudinary.com/dnciaoigz/image/upload/v1738837524/Branchify_Demo_fu1byp.gif)
 
-
 ---
 
 ## Example Output
-
 ```txt
 Pneumonia_Detection/
 ├── .devcontainer/
@@ -184,9 +181,9 @@ Pneumonia_Detection/
 
 ## LICENSE
 
-This project is licensed under the **BSD 3-Clause License**
+This project is licensed under the **BSD License**
 
 ---
 
 ## Contributing
-If you'd like to contribute to Branchify, please open an issue or a pull request here, and if you find it helpful, do consider starring the repository!
+If you'd like to contribute to Branchify, please open an issue or a pull request at the [repository](https://github.com/VanshajR/Branchify), and if you find it helpful, do consider starring the repository!

@@ -4,18 +4,18 @@ from pathlib import Path
 class FolderStructureGenerator:
     DEFAULT_IGNORE = {
         'directories': [
-            'node_modules', 'venv', '.git', '__pycache__', 'env',  ## AutoQuote is such a convenience for stuff like this, check it out on the Visual Studio marketplace or VS Code Extensions
+            'node_modules', 'venv', '.git', '__pycache__', 'env',  # AutoQuote actually made typing out this list so convenient, check it out on the Visual Studio marketplace or VS Code Extensions!
             '.vscode', '.idea', '.svn', '.DS_Store', '.mypy_cache',
             '.pytest_cache', '__snapshots__'
         ],
         'patterns': [
             '*.pyc', '*.swp', '*.swo', '*.toml', '*.lock', '*.log', '*.yaml',
-            '*.rst', '*.ini', '*.cfg', '*.out', '*.env', '*.git', '*.gitignore'
+            '*.rst', '*.ini', '*.cfg', '*.out', '*.git', '*.gitignore'
         ],
         'file_limit': 15
     }
 
-    def __init__(self, root_dir=None, ignores=None, includes=None):
+    def __init__(self, root_dir=None, ignores=None, includes=None, depth=None):
         try:
             self.root_dir = Path(root_dir or Path.cwd()).resolve()
             if not self.root_dir.is_dir():
@@ -25,30 +25,42 @@ class FolderStructureGenerator:
 
         self.ignores = ignores or {}
         self.includes = includes or {}
+
         self.output = []
         self._setup_filters()
 
+        # Use the provided depth (if any) to overwrite the file_limit
+        self.file_limit = depth or self.ignores.get('file_limit', self.DEFAULT_IGNORE['file_limit'])
+
     def _setup_filters(self):
-        """Sets up the ignored and explicitly included directories and file patterns."""
+        """Sets up filters for ignored and explicitly included files and directories."""
         self.ignored_dirs = set(self.DEFAULT_IGNORE['directories'])
         self.ignored_patterns = set(self.DEFAULT_IGNORE['patterns'])
-        
+        self.ignored_custom_patterns = set()  #
+
         # Apply user-provided ignores
         self.ignored_dirs.update(self.ignores.get('directories', []))
         self.ignored_patterns.update(self.ignores.get('patterns', []))
-        
+
+        # Custom ignored file patterns
+        self.ignored_custom_patterns.update(self.ignores.get('ignore_patterns', []))
+
         # Apply user-provided includes (removing from ignore lists)
         self.included_dirs = set(self.includes.get('directories', []))
         self.included_patterns = set(self.includes.get('patterns', []))
-        
-        self.file_limit = self.ignores.get('file_limit', self.DEFAULT_IGNORE['file_limit'])
 
     def _should_ignore(self, path):
         """Determines if a path should be ignored based on ignore and include rules."""
         if path.is_dir():
             return path.name in self.ignored_dirs and path.name not in self.included_dirs
+        
+        # Ignore patterns take precedence
+        if any(path.match(pattern) for pattern in self.ignored_custom_patterns):
+            return True
+        
         if any(path.match(pattern) for pattern in self.ignored_patterns):
             return not any(path.match(pattern) for pattern in self.included_patterns)
+
         return False
 
     def _format_files(self, files):
@@ -82,7 +94,7 @@ class FolderStructureGenerator:
             is_last_item = (overall_index == total_items - 1)
             connector = '└── ' if is_last_item else '├── '
             self.output.append(f"{prefix}{connector}{directory.name}/")
-            # Update prefix for children: if this item is last, use spaces; otherwise keep the vertical line
+            # Update prefix for children: if this item is last, use spaces; otherwise keep the vertical line, managing the leftmost vertical line this way
             new_prefix = prefix + ('    ' if is_last_item else '│   ')
             self._walk_dir(Path(directory.path), new_prefix)
 
