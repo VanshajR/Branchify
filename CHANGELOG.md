@@ -2,14 +2,17 @@
 ### Added
 - Support for custom ignore patterns.
 - Support for custom include options.
-- Support for custom file limit.
 - Supoort for saving the output in a name and format of choice.
 
-## [1.1.0] - 2025-02-06
+## [1.0.2] - 2025-02-06
+### Fixed
+- Fixed errors in documentation and added detailed usage of flags.
+
+## [1.0.1] - 2025-02-06
 ### Added
 - Added functionality to exclude file formats and customise the depth of the traversal.
 - Updated documentation.
-- 
+
 ## [1.0.0] - 2025-02-06
 ### Added
 - Added an update flag to the CLI for easy updation.
