@@ -107,10 +107,6 @@ generator.file_limit = file_limit
 
 # Generate and display the folder structure
 print(generator.generate())
-
-# Output the generated folder structure
-print("Generated Folder Structure:")
-print(structure)
 ```
 ---
 ## Default Ignored Files and Directories
