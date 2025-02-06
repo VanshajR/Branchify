@@ -2,11 +2,8 @@
 # Branchify Documentation 📂  
 
 **Branchify** generates an ASCII folder structure from any directory. Works for Python>=3.8
-<<<<<<< HEAD
-=======
 
-**Documentation** : Check out the documentation here: https://pypi.org/project/branchify/ 
->>>>>>> 93c26bd347be0b8e4841dde4d508b0bd30b89611
+**Documentation** : Check out the documentation here: https://pypi.org/project/branchify/
 
 ## Features  
 ✅ Command-line Interface (CLI) & Python API  
