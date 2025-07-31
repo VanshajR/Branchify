@@ -3,6 +3,8 @@
 
 **Branchify** generates an ASCII folder structure from any directory. Works for Python>=3.8
 
+[![PyPI Downloads](https://static.pepy.tech/badge/branchify)](https://pepy.tech/projects/branchify)
+
 **Documentation** : Check out the documentation here: https://pypi.org/project/branchify/
 
 ## Features  
